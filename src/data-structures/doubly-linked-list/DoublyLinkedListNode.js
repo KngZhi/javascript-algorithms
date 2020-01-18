@@ -1,11 +1,15 @@
 export default class DoublyLinkedListNode {
   constructor(value, next = null, previous = null) {
-    this.value = value;
-    this.next = next;
-    this.previous = previous;
+    this.value = value
+    this.previous = previous
+    this.next = next
   }
 
-  toString(callback) {
-    return callback ? callback(this.value) : `${this.value}`;
+  toString(cb) {
+    if (cb) {
+      return cb(this.value)
+    }
+
+    return this.value.toString()
   }
 }
