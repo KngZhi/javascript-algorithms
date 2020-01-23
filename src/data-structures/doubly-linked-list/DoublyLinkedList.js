@@ -110,4 +110,31 @@ export default class DoublyLinkedList {
 
     return deleteNode
   }
+
+  deleteTail() {
+    let deleteNode = null
+    if (!this.head) {
+      return deleteNode
+    }
+
+    let currentNode = this.head
+    if (!currentNode.next) {
+      deleteNode = this.head
+      this.head = null
+      this.tail = null
+      return deleteNode
+    }
+
+    while (currentNode && currentNode.next) {
+      if (!currentNode.next.next) {
+        deleteNode = currentNode.next
+        currentNode.next = null
+        this.tail = currentNode
+      }
+
+      currentNode = currentNode.next
+    }
+
+    return deleteNode
+  }
 }
