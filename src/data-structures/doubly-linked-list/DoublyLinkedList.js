@@ -1,10 +1,11 @@
-import DoublyLinkedListNode from './DoublyLinkedListNode';
-import Comparator from '../../utils/comparator/Comparator';
+import DoublyLinkedListNode from './DoublyLinkedListNode'
+import Comparator from '../../utils/comparator/Comparator'
 
 export default class DoublyLinkedList {
-  constructor() {
+  constructor(func) {
     this.head = null
     this.tail = null
+    this.comparator = func
   }
 
   toString(func) {
@@ -31,7 +32,7 @@ export default class DoublyLinkedList {
   append(value) {
     if (!this.head) {
       this.initList(value)
-      return
+      return this
     }
 
     let currentNode = this.head
@@ -42,17 +43,19 @@ export default class DoublyLinkedList {
     const newNode = new DoublyLinkedListNode(value, null, currentNode)
     currentNode.next = newNode
     this.tail = newNode
+    return this
   }
 
   prepend(value) {
     if (!this.head) {
       this.initList(value)
-      return
+      return this 
     }
 
     const currentNode = this.head
     const newNode = new DoublyLinkedListNode(value, currentNode, null)
     this.head = newNode
+    return this
   }
 
   fromArray(array) {
@@ -136,5 +139,51 @@ export default class DoublyLinkedList {
     }
 
     return deleteNode
+  }
+
+  deleteHead() {
+    if (!this.head) return null
+
+    const currentNode = this.head
+    if (!currentNode.next) {
+      this.head = null
+      this.tail = null
+      return currentNode
+    }
+
+    this.head = currentNode.next
+    this.head.next = currentNode.next.next
+    this.head.previous = null
+
+    return currentNode
+  }
+
+  find(node) {
+    if (!node) return null
+
+    const { value, callback } = node
+
+    let currentNode = this.head
+    while (currentNode && currentNode.value) {
+      if (this.comparator && this.comparator(node.value, currentNode.value)) {
+        return currentNode
+      }
+
+      if (value === currentNode.value) {
+        return currentNode
+      }
+
+      if (callback && callback(currentNode.value)) {
+        return currentNode
+      }
+
+      currentNode = currentNode.next
+    }
+
+    return null
+  }
+
+  reverse() {
+
   }
 }

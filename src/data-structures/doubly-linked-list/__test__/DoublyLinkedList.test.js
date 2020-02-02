@@ -205,11 +205,12 @@ describe('DoublyLinkedList', () => {
 
   it('should find node by means of custom compare function', () => {
     const comparatorFunction = (a, b) => {
-      if (a.customValue === b.customValue) {
-        return 0;
-      }
+      return a.customValue === b.customValue
+      // if (a.customValue === b.customValue) {
+      //   return 1;
+      // }
 
-      return a.customValue < b.customValue ? -1 : 1;
+      // return a.customValue < b.customValue ? -1 : 1;
     };
 
     const linkedList = new DoublyLinkedList(comparatorFunction);
